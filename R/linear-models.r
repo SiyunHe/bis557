@@ -11,6 +11,7 @@
 #' summary(fit)
 #' @export
 linear_model <- function(formula, data) {
+  browser()
   mm <- model.matrix(formula, data)
   y <- data$Sepal.Length[as.integer(row.names(mm))]
   x<-mm[,2:6]
