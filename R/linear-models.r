@@ -7,8 +7,6 @@
 #' @return An lm object
 #' @importFrom stats lm
 #' @examples
-#' fit <- linear_model(Sepal.Length ~., iris)
-#' summary(fit)
 #' @export
 linear_model <- function(formula, data) {
   a<- all.vars(formula)
@@ -21,3 +19,7 @@ linear_model <- function(formula, data) {
   class (output) = "lm"
   return(output)
 }
+
+
+
+
