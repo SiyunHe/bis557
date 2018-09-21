@@ -10,20 +10,34 @@
 #' fit <- linear_model(Sepal.Length ~., iris)
 #' summary(fit)
 #' @export
+
+load("/Users/siyunhe/Desktop/Year 2/BIS557/bis557/data/lm_patho.rda")
+
 linear_model <- function(formula, data) {
-  browser()
+  #browser()
+  a<- all.vars(formula)
+  y <- data[,a[1]]
   mm <- model.matrix(formula, data)
-  y <- data$Sepal.Length[as.integer(row.names(mm))]
-  x<-mm[,2:6]
-  svd_output <- svd(x)
-  U <- svd_output[["u"]]
-  Sinv <- diag(1 / svd_output[["d"]])
-  V <- svd_output[["v"]]
-  pseudo_inv <- V %*% Sinv %*% t(U)
-  betahat <- pseudo_inv %*% y
-  colnames(betahat) <- "regression coefficient"
-  rownames(betahat) <- c("Sepal.Width","Patal.Length","Petal.Width","Species_versicolor","Species_virginica")
-  print(betahat)
+  x<-mm
+  output <- list()
+  output$coefficients <- qr.coef(qr(x),y)
+  #output$call <- call("linear_model",formula)
+  class (output) = "lm"
+  return(output)
 }
-fit <- linear_model(Sepal.Length ~., iris)
+#fit_test <- linear_model(y~.,data=lm_patho)
+#fit <- lm(lm_patho$y~.,lm_patho)
+
+#install.packages("testthat")
+
+#library(testthat)
+
+#library(devtools)
+#setwd("/Users/siyunhe/Desktop/Year 2/BIS557/bis557")
+#test( )
+
+
+
+
+
 
