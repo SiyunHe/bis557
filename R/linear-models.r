@@ -5,7 +5,7 @@
 #' @param formula a formula
 #' @param data a data.frame
 #' @return An lm object
-#' @importFrom stats lm
+#' @importFrom stats model.matrix 
 #' @examples
 #' @export
 linear_model <- function(formula, data) {
