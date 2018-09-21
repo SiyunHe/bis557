@@ -11,7 +11,7 @@
 #' summary(fit)
 #' @export
 
-load("/Users/siyunhe/Desktop/Year 2/BIS557/bis557/data/lm_patho.rda")
+#load("/Users/siyunhe/Desktop/Year 2/BIS557/bis557/data/lm_patho.rda")
 
 linear_model <- function(formula, data) {
   #browser()
