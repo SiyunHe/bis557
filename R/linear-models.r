@@ -6,8 +6,7 @@
 #' @param data a data.frame
 #' @return An lm object
 #' @importFrom stats model.matrix 
-#' @examples
-#' @export
+#' @export 
 linear_model <- function(formula, data) {
   a<- all.vars(formula)
   y <- data[,a[1]]
@@ -15,7 +14,6 @@ linear_model <- function(formula, data) {
   x<-mm
   output <- list()
   output$coefficients <- qr.coef(qr(x),y)
-  #output$call <- call("linear_model",formula)
   class (output) = "lm"
   return(output)
 }
