@@ -11,5 +11,13 @@
 #' summary(fit)
 #' @export
 linear_model <- function(formula, data) {
-  lm(formula, data)
+  a<- all.vars(formula)
+  y <- data[,a[1]]
+  mm <- model.matrix(formula, data)
+  x<-mm
+  output <- list()
+  output$coefficients <- qr.coef(qr(x),y)
+  #output$call <- call("linear_model",formula)
+  class (output) = "lm"
+  return(output)
 }
