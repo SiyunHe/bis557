@@ -8,7 +8,6 @@
 #' @importFrom stats 
 #' @export
 
-library(MASS)
 ridge_reg <- function(formula,lambda,data){
   m <- model.matrix(formula,data)
   y <- matrix(data[,as.character(formula)[2]], ncol=1)
