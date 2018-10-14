@@ -9,6 +9,7 @@
 #' @export
 
 ridge_reg <- function(formula,lambda,data){
+  rownames(data) <- NULL
   m <- model.matrix(formula,data)
   y <- matrix(data[,as.character(formula)[2]], ncol=1)
   y <- y[as.numeric(rownames(m)),,drop=FALSE]
