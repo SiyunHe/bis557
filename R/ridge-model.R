@@ -5,7 +5,7 @@
 #' @param data a data.frame
 #' @param lambda a tuning parameter
 #' @return An ridge object
-#' @importFrom stats 
+#' @importFrom stats model.matrix
 #' @export
 
 ridge_reg <- function(formula,lambda,data){
@@ -24,5 +24,4 @@ ridge_reg <- function(formula,lambda,data){
   ret
 }
 
-#ridge_reg(y~.,0,ridge_train)
 
