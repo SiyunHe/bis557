@@ -26,6 +26,6 @@ ridge_reg <- function(formula,lambda,data){
   ret
 }
 
-ridge_reg(y~.,0,ridge_train)
+#ridge_reg(y~.,0,ridge_train)
 
 
