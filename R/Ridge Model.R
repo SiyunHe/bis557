@@ -1,5 +1,3 @@
-ridge_test<-read.csv("/Users/siyunhe/Desktop/BIS557_HW2/ridge_test.csv")
-ridge_train<-read.csv("/Users/siyunhe/Desktop/BIS557_HW2/ridge_train.csv")
 #' Fit a ridge regression model
 #'
 #' @description This function passes parameters to the ridge regression function.
@@ -27,5 +25,4 @@ ridge_reg <- function(formula,lambda,data){
 }
 
 #ridge_reg(y~.,0,ridge_train)
-
 
