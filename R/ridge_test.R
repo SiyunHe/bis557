@@ -3,6 +3,6 @@
 #' @name ridge_test
 #' @docType data
 #' @rdname ridge_test
-#' @description In homework 2 we explore the effect of lambda values
-#' on ridge regressions. This data set gives us a basis for exploration.
+#' @description In homework 2 we explore the effect on the out of sample mean sqaure error 
+#' as lambda varies. This data set gives us a basis for exploration.
 NULL

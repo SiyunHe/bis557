@@ -36,12 +36,9 @@ predict.ridge_reg <- function(object, ...){
 
 #Out of sample mean squared error as lambda varies
 #Set a sequence of reasonable values of lambda
-lambda_seq <- seq(0,500,by=1)
-#out of sample MSE
-#install.packages("foreach")
-
-
-mse = rep(NA, length(lambda_seq))
+lambda_seq <- seq(0,500,1)
+#out of sample mse
+mse = rep(0, length(lambda_seq))
 for (i in 1:length(lambda_seq)){
   fit <- ridge_reg(y~.,lambda_seq[i],ridge_train)
   error <- ridge_test$y - predict(fit,ridge_test)
@@ -50,6 +47,7 @@ for (i in 1:length(lambda_seq)){
 
 #select lambda values on the log scale
 plot(log(lambda_seq),mse)
+#Select lambda value according to the smallest out of sample mean square error
 mse[which.min(lambda_seq)]
 ```
 
