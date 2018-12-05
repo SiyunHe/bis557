@@ -1,0 +1,89 @@
+---
+title: "BIS557_HW4"
+author: "Siyun He"
+date: "11/29/2018"
+output: html_document
+---
+##CASL Number 2 in Exercises 5.8
+```{r}
+#Generate a matrix
+X <- matrix(c(1, 2, 2, 0.1), 2, 2)
+p <- c(0.1, 0.0000001)
+X
+p
+#Calculate the condition number of linear Hessian matrix
+svals <- svd(t(X)%*%X)$d
+max(svals) / min(svals)
+#Calculate the condition number of logistic variation Hessian matrix
+svals <- svd(t(X)%*%diag(p*(1-p))%*%X)$d
+max(svals)/min(svals)
+#The condition number of linear Hessian matrix is very small, while the condition number of logistic variation Hessian matrix is very large. Thus, linear Hessian is well-conditioned, while logistic variation Hessian is ill-conditioned.
+```
+
+##CASL Number 4 in Exercises 5.8
+```{r}
+# Args:
+# X: A numeric data matrix.
+# y: Response vector.
+# family: Instance of an R ‘family‘ object.
+# maxit: Integer maximum number of iterations.
+# tol: Numeric tolerance parameter.
+# lambda: a penalty term
+irwls_glm_penalty <- function(X, y, family, maxit=25, tol=1e-10, lambda){
+  beta <- rep(0,ncol(X))
+  for(j in 1:maxit){
+    b_old <- beta
+    eta   <- X %*% beta
+    mu    <- family$linkinv(eta)
+    mu_p  <- family$mu.eta(eta)
+    z     <- eta + (y - mu) / mu_p
+    W     <- as.numeric(mu_p^2 / family$variance(mu))
+    XtX   <- crossprod(X, diag(W) %*% X)
+    Xtz   <- crossprod(X, W * z)
+    beta  <- solve((XtX + diag(lambda, dim(XtX)[1])), Xtz)
+    if(sqrt(crossprod(beta - b_old)) < tol) break
+  }
+  beta
+}
+```
+##Number 3. Sparse Matrix
+```{r}
+#Sparse matrix multiplication
+sparse_add <- function(a, b) {
+c <- merge(a, b, by = c("i", "j"), all = TRUE, suffixes = c("1", "2"))
+c$x1[is.na(c$x1)] <- 0
+c$x2[is.na(c$x2)] <- 0
+c$x <- c$x1 + c$x2
+c[, c("i", "j", "x")]
+}
+a <- data.frame(i = c(1, 2), j = c(1, 1), x = c(3, 1))
+b <- data.frame(i = c(1, 2, 2), j = c(1, 1, 2), x = c(4.4, 1.2, 3))
+sparse_add(a, b)
+```
+```{r}
+#According to the textbook, the sparse multipliy is given as follow
+# Multiply two sparse matrices stored as triplet lists.
+##Args:
+# a: A list describing a sparse matrix.
+# b: A list describing a sparse matrix.
+#Returns:
+# A list describing the product of a and b as a sparse matrix.
+casl_sparse_multiply <-
+function(a, b)
+{
+colnames(b) <- c("i2", "j2", "x2")
+c <- merge(a, b, by.x = "j", by.y = "i2",
+all = FALSE, suffixes = c("1", "2"))
+c$x <- c$x * c$x2
+c$key <- paste(c$i, c$j, sep = "-")
+x <- tapply(c$x, c$key, sum)
+key <- strsplit(names(x), "-")
+d <- data.frame(i = sapply(key, getElement, 1),
+j = sapply(key, getElement, 2),
+x = as.numeric(x))
+d
+}
+a <- data.frame(i = c(1, 2), j = c(1, 1), x = c(3, 1))
+b <- data.frame(i = c(1, 2, 2), j = c(1, 1, 2), x = c(4.4, 1.2, 3))
+casl_sparse_multiply(a, b)
+```
