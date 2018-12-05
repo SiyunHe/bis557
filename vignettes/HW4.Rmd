@@ -22,6 +22,7 @@ max(svals)/min(svals)
 
 ##CASL Number 4 in Exercises 5.8
 ```{r}
+set.seed(365)
 # Args:
 # X: A numeric data matrix.
 # y: Response vector.
@@ -40,11 +41,12 @@ irwls_glm_penalty <- function(X, y, family, maxit=25, tol=1e-10, lambda){
     W     <- as.numeric(mu_p^2 / family$variance(mu))
     XtX   <- crossprod(X, diag(W) %*% X)
     Xtz   <- crossprod(X, W * z)
-    beta  <- solve((XtX + diag(lambda, dim(XtX)[1])), Xtz)
+    beta  <- solve((XtX + 2*lambda*diag(1, nrow = nrow(XtX), ncol = ncol(XtX))), Xtz)
     if(sqrt(crossprod(beta - b_old)) < tol) break
   }
   beta
 }
+
 ```
 ##Number 3. Sparse Matrix
 ```{r}
